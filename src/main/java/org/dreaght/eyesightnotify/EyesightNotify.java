@@ -28,7 +28,7 @@ public class EyesightNotify {
         if (userHome.equals("/root")) {
             Logger.getGlobal().warning(
                         "It is not recommended to run this using `sudo`!\n" +
-                            "If notifications does not shows, read README.md:\n" +
+                            "If the notifications do not appear, see:\n" +
                             "https://github.com/Dreaght/EyesightNotify/blob/master/README.md");
         }
 
