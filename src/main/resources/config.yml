@@ -1,0 +1,5 @@
+play-sound: true
+
+# (s - seconds / m - minutes / h - hours)
+notification-rate: 20m
+notification-message: "Go away for 20 Secs!"

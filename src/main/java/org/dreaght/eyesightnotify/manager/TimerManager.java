@@ -5,17 +5,16 @@ import org.dreaght.eyesightnotify.task.NotifyTimerTask;
 
 import java.util.Timer;
 
-@Getter
 public class TimerManager {
     @Getter
     private static TimerManager instance;
-    private final int period;
+    private final long period;
 
-    private TimerManager(int period) {
+    private TimerManager(long period) {
         this.period = period;
     }
 
-    public static void init(int period) {
+    public static void init(long period) {
         if (instance == null) {
             instance = new TimerManager(period);
         }

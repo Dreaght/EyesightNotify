@@ -8,8 +8,10 @@ import java.io.*;
 public class SoundManager {
     public static void playRandomSoundFromResources(String folderPath, float volume)
             throws IOException, LineUnavailableException, UnsupportedAudioFileException {
-        File randomSoundFile = new SoundFilesUtil(folderPath).getRandomSoundFile();
-        playSound(randomSoundFile, volume);
+        File randomSoundFile = new SoundFilesUtil(folderPath).getRandomSoundFileOrNull();
+
+        if (randomSoundFile != null)
+            playSound(randomSoundFile, volume);
     }
 
     private static void playSound(File soundFile, float volume)

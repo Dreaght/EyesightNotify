@@ -1,14 +1,14 @@
 package org.dreaght.eyesightnotify.util;
 
+import org.dreaght.eyesightnotify.EyesightNotify;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 public class SoundFilesUtil {
-    private static final String programName = ".eyesight";
-    private static final String userHome = System.getProperty("user.home");
-    private static final String programDirectoryPath = userHome + File.separator + programName;
     private final File soundFolder;
 
     public SoundFilesUtil(String folderPath) {
@@ -16,17 +16,19 @@ public class SoundFilesUtil {
     }
 
     public File getSoundDirectory(String soundFolderName) {
-        File soundDirectory = new File(programDirectoryPath + File.separator + soundFolderName);
+        File soundDirectory = new File(EyesightNotify.getProgramDirectoryPath() + File.separator + soundFolderName);
         soundDirectory.mkdirs();
 
         return soundDirectory;
     }
 
-    public File getRandomSoundFile() {
+    public File getRandomSoundFileOrNull() {
         List<File> soundFiles = listFilesInSoundFolder();
 
         if (soundFiles.isEmpty()) {
-            throw new RuntimeException("No sound files found in the sounds folder");
+            Logger.getGlobal().severe("No sound files found in the sounds folder!\n" +
+                    "Sound folder: " + soundFolder.getAbsolutePath());
+            return null;
         }
         return soundFiles.get((int) (Math.random() * soundFiles.size()));
     }
