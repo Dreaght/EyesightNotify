@@ -8,7 +8,7 @@
 ## Sounds (optional)
 #### Add sound files (`.wav`) into `${user.home}/.eyesight/sounds/` folder.
 > [!WARNING]
-> Currently only `.wav` sound files are supported 
+> Currently only `.wav` sound files are supported
 > since Java doesn't support `.mp3` for example!
 
 ## Configuration
@@ -26,27 +26,17 @@ notification-message: "Go away for 20 Secs!"
 > `/home/yourname/.eyesight/`.
 > If you run this application using `sudo`, the location will be:
 > `/root/.eyesight/`
-> 
+>
 > I do not recommend to run application using `sudo`!
 
-## Startup
-
-#### Make application run at startup:
-`sudo java -jar EyesightNotify-${version}.jar --enable-startup`
-
-#### Remove application from startup:
-`sudo java -jar EyesightNotify-${version}.jar --disable-startup`
-
-> [!WARNING]
-> `sudo` is required to add this application to startup services.
-
+## Problems
 > [!CAUTION]
 > If you run application using `sudo` command
 > it may not send any notifications. You can fix it
 > by changing the Notification Service at:
-> 
+>
 > `/usr/share/dbus-1/services/org.freedesktop.Notifications.service`
-> 
+>
 > For example, paste this:
 > ```
 > [D-BUS Service]
@@ -55,5 +45,5 @@ notification-message: "Go away for 20 Secs!"
 > ```
 >
 > `sudo apt install -y notification-daemon`
-> 
+>
 > So, use `sudo` only to run this application with arguments.

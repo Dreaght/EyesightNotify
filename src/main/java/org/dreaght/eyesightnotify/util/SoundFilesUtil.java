@@ -6,7 +6,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 public class SoundFilesUtil {
     private final File soundFolder;
@@ -26,7 +25,7 @@ public class SoundFilesUtil {
         List<File> soundFiles = listFilesInSoundFolder();
 
         if (soundFiles.isEmpty()) {
-            Logger.getGlobal().severe("No sound files found in the sounds folder!\n" +
+            EyesightNotify.getLogger().warning("No sound files found in the sounds folder!\n" +
                     "Sound folder: " + soundFolder.getAbsolutePath());
             return null;
         }
@@ -44,9 +43,7 @@ public class SoundFilesUtil {
     }
 
     private void addIfSoundFile(List<File> soundFiles, File file) {
-        String fileName = file.getName();
-
-        if (fileName.endsWith(".wav")) {
+        if (FileUtil.hasMatchingExtension(file, "wav")) {
             soundFiles.add(file);
         }
     }

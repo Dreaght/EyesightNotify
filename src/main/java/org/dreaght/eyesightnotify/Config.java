@@ -14,8 +14,10 @@ public class Config {
     private String notificationMessage;
 
     public static Config loadFromFile(String filePath) throws IOException {
+        ResourceUtil resourceUtil = new ResourceUtil(filePath);
+
         Yaml yaml = new Yaml();
-        Map<String, Object> data = (Map<String, Object>) yaml.load(makeFileInputStream(filePath));
+        Map<String, Object> data = (Map<String, Object>) yaml.load(resourceUtil.makeAndGetFileInputStream());
 
         Config config = new Config();
         config.playSound = (boolean) data.get("play-sound");
@@ -23,16 +25,5 @@ public class Config {
         config.notificationMessage = (String) data.get("notification-message");
 
         return config;
-    }
-
-    private static FileInputStream makeFileInputStream(String filePath) throws IOException {
-        File absoluteFile = new File(EyesightNotify.getProgramDirectoryPath() + File.separator + filePath);
-
-        if (absoluteFile.exists()) {
-            return new FileInputStream(absoluteFile);
-        }
-
-        ResourceUtil.saveDefaultResource(filePath);
-        return makeFileInputStream(filePath);
     }
 }

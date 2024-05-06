@@ -4,43 +4,59 @@ import org.dreaght.eyesightnotify.Config;
 import org.dreaght.eyesightnotify.EyesightNotify;
 
 import java.io.*;
-import java.util.logging.Logger;
 
 public class ResourceUtil {
-    public static void saveDefaultResource(String filePath) throws IOException {
-        InputStream inputStream = getResourceStream(filePath);
+    private final String resourcePath;
+
+    public ResourceUtil(String resourcePath) {
+        this.resourcePath = resourcePath;
+    }
+
+    public FileInputStream makeAndGetFileInputStream() throws IOException {
+        File file = new File(EyesightNotify.getProgramDirectoryPath(), resourcePath);
+        if (file.exists()) {
+            return new FileInputStream(file);
+        }
+
+        if (saveDefaultResource()) {
+            return makeAndGetFileInputStream();
+        }
+
+        EyesightNotify.getLogger().severe("No resource found: " + resourcePath);
+        return (FileInputStream) getResourceStream();
+    }
+
+    public boolean saveDefaultResource() throws IOException {
+        createProgramDirectoryIfNotExist();
+
+        InputStream inputStream = getResourceStream();
         if (inputStream == null) {
-            logResourceNotFound(filePath);
-            return;
+            logResourceNotFound(resourcePath);
+            return false;
         }
 
-        File targetFile = createTargetFile(filePath);
-        copyResourceToFile(inputStream, targetFile);
+        File targetFile = getFile();
+        FileUtil.copyInputStreamToFile(inputStream, targetFile);
 
-        Logger.getGlobal().info("Config file saved to: " + targetFile.getAbsolutePath());
+        EyesightNotify.getLogger().info("Config file saved to: " + targetFile.getAbsolutePath());
+        return true;
     }
 
-    private static InputStream getResourceStream(String filePath) {
-        return Config.class.getClassLoader().getResourceAsStream(filePath);
+    public InputStream getResourceStream() {
+        return Config.class.getClassLoader().getResourceAsStream(resourcePath);
     }
 
-    private static void logResourceNotFound(String filePath) {
-        Logger.getGlobal().severe("Unable to find resource: " + filePath);
+    private void logResourceNotFound(String filePath) {
+        EyesightNotify.getLogger().severe("Unable to find resource: " + filePath + "\n" +
+                "Install the correct version of this program at: https://github.com/Dreaght/EyesightNotify");
     }
 
-    private static File createTargetFile(String filePath) {
+    public File getFile() {
         File programDir = new File(EyesightNotify.getProgramDirectoryPath());
-        programDir.mkdirs();
-        return new File(programDir, filePath);
+        return new File(programDir, resourcePath);
     }
 
-    private static void copyResourceToFile(InputStream inputStream, File targetFile) throws IOException {
-        try (OutputStream outputStream = new FileOutputStream(targetFile)) {
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = inputStream.read(buffer)) > 0) {
-                outputStream.write(buffer, 0, length);
-            }
-        }
+    private void createProgramDirectoryIfNotExist() {
+        new File(EyesightNotify.getProgramDirectoryPath()).mkdirs();
     }
 }
