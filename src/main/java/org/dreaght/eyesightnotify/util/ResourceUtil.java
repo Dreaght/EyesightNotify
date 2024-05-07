@@ -5,29 +5,39 @@ import org.dreaght.eyesightnotify.EyesightNotify;
 
 import java.io.*;
 
-public class ResourceUtil {
+/**
+ * Represents the resources access util.
+ */
+public class ResourceUtil extends FileUtil {
     private final String resourcePath;
 
     public ResourceUtil(String resourcePath) {
         this.resourcePath = resourcePath;
     }
 
-    public FileInputStream makeAndGetFileInputStream() throws IOException {
+    /**
+     * Gets the file input stream of resource path.
+     * @return File input stream.
+     * @throws IOException
+     */
+    public FileInputStream getFileInputStreamOrNull() throws IOException {
         File file = new File(EyesightNotify.getProgramDirectoryPath(), resourcePath);
+        FileInputStream fileInputStream = null;
+
         if (file.exists()) {
-            return new FileInputStream(file);
+            fileInputStream = new FileInputStream(file);
         }
 
-        if (saveDefaultResource()) {
-            return makeAndGetFileInputStream();
-        }
-
-        EyesightNotify.getLogger().severe("No resource found: " + resourcePath);
-        return (FileInputStream) getResourceStream();
+        return fileInputStream;
     }
 
+    /**
+     * Save resource to file.
+     * @return `true` if saved, `false` otherwise.
+     * @throws IOException
+     */
     public boolean saveDefaultResource() throws IOException {
-        createProgramDirectoryIfNotExist();
+        gerProgramDir();
 
         InputStream inputStream = getResourceStream();
         if (inputStream == null) {
@@ -36,7 +46,7 @@ public class ResourceUtil {
         }
 
         File targetFile = getFile();
-        FileUtil.copyInputStreamToFile(inputStream, targetFile);
+        copyInputStreamToFile(inputStream, targetFile);
 
         EyesightNotify.getLogger().info("Config file saved to: " + targetFile.getAbsolutePath());
         return true;
@@ -54,9 +64,5 @@ public class ResourceUtil {
     public File getFile() {
         File programDir = new File(EyesightNotify.getProgramDirectoryPath());
         return new File(programDir, resourcePath);
-    }
-
-    private void createProgramDirectoryIfNotExist() {
-        new File(EyesightNotify.getProgramDirectoryPath()).mkdirs();
     }
 }

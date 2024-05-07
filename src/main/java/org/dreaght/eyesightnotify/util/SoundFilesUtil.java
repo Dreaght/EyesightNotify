@@ -7,13 +7,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class SoundFilesUtil {
+/**
+ * Represents the sound files util.
+ */
+public class SoundFilesUtil extends FileUtil {
     private final File soundFolder;
 
     public SoundFilesUtil(String folderPath) {
         this.soundFolder = getSoundDirectory(folderPath);
     }
 
+    /**
+     * Gets the sound directory File.
+     * @param soundFolderName
+     * @return Sound directory File.
+     */
     public File getSoundDirectory(String soundFolderName) {
         File soundDirectory = new File(EyesightNotify.getProgramDirectoryPath() + File.separator + soundFolderName);
         soundDirectory.mkdirs();
@@ -21,6 +29,10 @@ public class SoundFilesUtil {
         return soundDirectory;
     }
 
+    /**
+     * Gets the random sound file of loaded.
+     * @return Sound File.
+     */
     public File getRandomSoundFileOrNull() {
         List<File> soundFiles = listFilesInSoundFolder();
 
@@ -32,6 +44,10 @@ public class SoundFilesUtil {
         return soundFiles.get((int) (Math.random() * soundFiles.size()));
     }
 
+    /**
+     * Gets the list of supported sound files.
+     * @return List of supported sound files.
+     */
     public List<File> listFilesInSoundFolder() {
         List<File> soundFiles = new ArrayList<>();
 
@@ -43,7 +59,7 @@ public class SoundFilesUtil {
     }
 
     private void addIfSoundFile(List<File> soundFiles, File file) {
-        if (FileUtil.hasMatchingExtension(file, "wav")) {
+        if (hasMatchingExtension(file, "wav")) {
             soundFiles.add(file);
         }
     }

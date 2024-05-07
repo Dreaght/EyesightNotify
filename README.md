@@ -45,5 +45,3 @@ notification-message: "Go away for 20 Secs!"
 > ```
 >
 > `sudo apt install -y notification-daemon`
->
-> So, use `sudo` only to run this application with arguments.

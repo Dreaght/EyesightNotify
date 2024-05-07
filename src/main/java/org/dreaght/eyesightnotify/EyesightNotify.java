@@ -2,12 +2,19 @@ package org.dreaght.eyesightnotify;
 
 import lombok.Getter;
 import org.dreaght.eyesightnotify.manager.TimerManager;
+import org.dreaght.eyesightnotify.util.LogUtil;
 import org.dreaght.eyesightnotify.util.ParsePeriod;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
 import java.util.logging.Logger;
 
+/**
+ * Represents the program entrypoint.
+ */
 public class EyesightNotify {
     @Getter private static Logger logger = Logger.getLogger(EyesightNotify.class.getName());
     private static final String programName = ".eyesight";
@@ -16,7 +23,14 @@ public class EyesightNotify {
 
     @Getter private static Config config;
 
+    /**
+     * Launches all necessary modules.
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
+        initializeLogs();
+
         if (userHome.equals("/root")) {
             logger.warning("""
                     It is not recommended to run this using `sudo`!
@@ -30,5 +44,18 @@ public class EyesightNotify {
         TimerManager timerManager = TimerManager.getInstance();
 
         timerManager.startTask();
+    }
+
+    /**
+     * Initializes the logs file.
+     * @throws IOException
+     */
+    public static void initializeLogs() throws IOException {
+        LogUtil.createLogFolder();
+        Handler handler = new FileHandler(
+                LogUtil.getLogFolder().getAbsolutePath()
+                        + File.separator + new Date().getTime()
+                , 5 * 1024 * 1024, 10);
+        logger.addHandler(handler);
     }
 }
