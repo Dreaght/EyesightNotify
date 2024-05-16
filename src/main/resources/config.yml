@@ -1,5 +1,8 @@
 play-sound: true
 
+# Use 0.0 or 1.0 instead of 0 or 1!
+sound-volume: 1.0 # from 0.0 to 1.0.
+
 # (s - seconds / m - minutes / h - hours)
 notification-rate: 20m
 notification-message: "Go away for 20 Secs!"

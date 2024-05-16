@@ -6,7 +6,7 @@ import javax.sound.sampled.*;
 import java.io.*;
 
 public class SoundManager {
-    public static void playRandomSoundFromResources(String folderPath, float volume)
+    public static void playRandomSoundFromResources(String folderPath, double volume)
             throws IOException, LineUnavailableException, UnsupportedAudioFileException {
         File randomSoundFile = new SoundFilesUtil(folderPath).getRandomSoundFileOrNull();
 
@@ -14,15 +14,26 @@ public class SoundManager {
             playSound(randomSoundFile, volume);
     }
 
-    private static void playSound(File soundFile, float volume)
+    private static void playSound(File soundFile, double volume)
             throws IOException, LineUnavailableException, UnsupportedAudioFileException {
         AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
         Clip clip = AudioSystem.getClip();
         clip.open(audioIn);
 
-        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-        gainControl.setValue(volume);
+        setVolume(clip, (float) volume);
 
         clip.start();
+    }
+
+    public static float getVolume(Clip clip) {
+        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        return (float) Math.pow(10f, gainControl.getValue() / 20f);
+    }
+
+    public static void setVolume(Clip clip, float volume) {
+        if (volume < 0f || volume > 1f)
+            throw new IllegalArgumentException("Volume not valid: " + volume);
+        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        gainControl.setValue(20f * (float) Math.log10(volume));
     }
 }

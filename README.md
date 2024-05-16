@@ -12,14 +12,7 @@
 > since Java doesn't support `.mp3` for example!
 
 ## Configuration
-#### Located at: `${user.home}/.eyesight/config.yml`:
-```
-play-sound: true
-
-# (s - seconds / m - minutes / h - hours)
-notification-rate: 20m
-notification-message: "Go away for 20 Secs!"
-```
+#### Located at: `${user.home}/.eyesight/config.yml`
 
 > [!NOTE]
 > The default program folder location:

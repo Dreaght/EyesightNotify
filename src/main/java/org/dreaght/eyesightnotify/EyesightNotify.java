@@ -40,7 +40,7 @@ public class EyesightNotify {
 
         config = Config.loadFromFile("config.yml");
 
-        TimerManager.init(ParsePeriod.getPeriodFromString(config.getNotificationRate()));
+        TimerManager.init(config.getNotificationRate());
         TimerManager timerManager = TimerManager.getInstance();
 
         timerManager.startTask();

@@ -1,6 +1,7 @@
 package org.dreaght.eyesightnotify;
 
 import lombok.Getter;
+import org.dreaght.eyesightnotify.util.ParsePeriod;
 import org.dreaght.eyesightnotify.util.ResourceUtil;
 import org.yaml.snakeyaml.Yaml;
 
@@ -13,7 +14,8 @@ import java.util.Map;
 @Getter
 public class Config {
     private boolean playSound;
-    private String notificationRate;
+    private double soundVolume;
+    private long notificationRate;
     private String notificationMessage;
 
     /**
@@ -45,7 +47,8 @@ public class Config {
     private static Config createConfigFromData(Map<String, Object> data) {
         Config config = new Config();
         config.playSound = (boolean) data.get("play-sound");
-        config.notificationRate = (String) data.get("notification-rate");
+        config.soundVolume = (double) data.get("sound-volume");
+        config.notificationRate = ParsePeriod.getPeriodFromString((String) data.get("notification-rate"));
         config.notificationMessage = (String) data.get("notification-message");
         return config;
     }

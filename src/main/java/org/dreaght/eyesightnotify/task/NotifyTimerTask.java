@@ -12,7 +12,6 @@ import java.util.TimerTask;
 public class NotifyTimerTask extends TimerTask {
     private static final String APP_NAME = "Eyesight";
     private static final String soundFolderName = "sounds";
-    private static final Float soundVolume = 6.0f;
 
     @Override
     public void run() {
@@ -22,7 +21,7 @@ public class NotifyTimerTask extends TimerTask {
 
         if (config.isPlaySound()) {
             try {
-                SoundManager.playRandomSoundFromResources(soundFolderName, soundVolume);
+                SoundManager.playRandomSoundFromResources(soundFolderName, config.getSoundVolume());
             } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
                 throw new RuntimeException(e);
             }
