@@ -23,6 +23,12 @@ public class SoundManager {
         setVolume(clip, (float) volume);
 
         clip.start();
+
+        clip.addLineListener(event -> {
+            if (event.getType() == LineEvent.Type.STOP) {
+                event.getLine().close();
+            }
+        });
     }
 
     public static float getVolume(Clip clip) {
