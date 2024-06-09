@@ -9,12 +9,12 @@
 ![eyesight-showcase](https://github.com/Dreaght/EyesightNotify/assets/111290888/3101b0f1-f116-4d75-80b5-e3c50e784296)
 
 ## Sounds (optional)
-#### Add sound files (`.wav`) into `~/.eyesight/.eyesight/sounds/` folder.
+#### Add sound files (`.wav`) into `~/.eyesight/sounds/` folder.
 > [!WARNING]
 > Currently only `.wav` sound files are supported!
 
 ## Configuration
-#### Located at: `~/.eyesight/.eyesight/config.yml`
+#### Located at: `~/.eyesight/config.yml`
 * Launch at startup, notification rate, message, etc.
 
 > [!NOTE]
