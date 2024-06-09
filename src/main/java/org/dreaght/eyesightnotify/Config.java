@@ -13,6 +13,7 @@ import java.util.Map;
  */
 @Getter
 public class Config {
+    private boolean startup;
     private boolean playSound;
     private double soundVolume;
     private long notificationRate;
@@ -46,6 +47,7 @@ public class Config {
 
     private static Config createConfigFromData(Map<String, Object> data) {
         Config config = new Config();
+        config.startup = (boolean) data.get("launch-at-startup");
         config.playSound = (boolean) data.get("play-sound");
         config.soundVolume = (double) data.get("sound-volume");
         config.notificationRate = ParsePeriod.getPeriodFromString((String) data.get("notification-rate"));

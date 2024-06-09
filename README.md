@@ -1,26 +1,29 @@
 # Eye-safe 20/20/20 Linux application.
 
-* Sends the notification every 20 mins.
-* Plays the random sound located in `${user.home}/.eyesight/sounds` location.
+* Sends the notification with period you choose _(default: 20 minutes)_.
+* Plays the random sound located in `${user.home}/.eyesight/sounds`.
+* Launches at startup.
+
+## It's simple and easy to use!
 
 ![eyesight-showcase](https://github.com/Dreaght/EyesightNotify/assets/111290888/3101b0f1-f116-4d75-80b5-e3c50e784296)
 
 ## Sounds (optional)
-#### Add sound files (`.wav`) into `${user.home}/.eyesight/sounds/` folder.
+#### Add sound files (`.wav`) into `~/.eyesight/.eyesight/sounds/` folder.
 > [!WARNING]
-> Currently only `.wav` sound files are supported
-> since Java doesn't support `.mp3` for example!
+> Currently only `.wav` sound files are supported!
 
 ## Configuration
-#### Located at: `${user.home}/.eyesight/config.yml`
+#### Located at: `~/.eyesight/.eyesight/config.yml`
+* Launch at startup, notification rate, message, etc.
 
 > [!NOTE]
 > The default program folder location:
-> `/home/yourname/.eyesight/`.
-> If you run this application using `sudo`, the location will be:
-> `/root/.eyesight/`
+> `~/.eyesight/`.
+> If you run this application using `sudo`, the location is:
+> `/root/.eyesight/`.
 >
-> I do not recommend to run application using `sudo`!
+> It's not recommended to run application using `sudo`!
 
 ## Problems
 > [!CAUTION]

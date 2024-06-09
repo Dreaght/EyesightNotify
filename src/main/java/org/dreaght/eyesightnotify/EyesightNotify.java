@@ -2,6 +2,7 @@ package org.dreaght.eyesightnotify;
 
 import lombok.Getter;
 import org.dreaght.eyesightnotify.manager.TimerManager;
+import org.dreaght.eyesightnotify.util.AutoStart;
 import org.dreaght.eyesightnotify.util.LogUtil;
 import org.dreaght.eyesightnotify.util.ParsePeriod;
 
@@ -44,6 +45,12 @@ public class EyesightNotify {
         TimerManager timerManager = TimerManager.getInstance();
 
         timerManager.startTask();
+
+        if (config.isStartup()) {
+            AutoStart.addToStartup();
+        } else {
+            AutoStart.removeFromStartup();
+        }
     }
 
     /**
